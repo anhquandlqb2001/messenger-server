@@ -43,10 +43,10 @@ class ConfigService {
 
       migrationsTableName: 'migration',
 
-      migrations: ['src/migration/*.ts'],
+      migrations: ['src/migrations/*.ts'],
 
       cli: {
-        migrationsDir: 'src/migration',
+        migrationsDir: 'src/migrations',
       },
 
       ssl: this.isProduction(),
