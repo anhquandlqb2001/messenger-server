@@ -38,3 +38,6 @@ scripts
 
 #
 .env
+
+#
+ormconfig.json
