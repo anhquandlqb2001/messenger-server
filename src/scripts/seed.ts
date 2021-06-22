@@ -1,7 +1,7 @@
 import { createConnection, ConnectionOptions } from 'typeorm';
 import { configService } from '../config/config.service';
 import { ItemService } from '../item/item.service';
-import { Item } from '../models/item.entity';
+import { Item } from '../entities/item.entity';
 import { ItemDTO } from '../item/item.dto';
 
 async function run() {
