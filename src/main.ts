@@ -1,6 +1,6 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { configService } from './config/config.service';
 
@@ -13,7 +13,7 @@ async function bootstrap() {
       preflightContinue: false,
     }
   });
-  
+
   if (!configService.isProduction()) {
 
     const document = SwaggerModule.createDocument(app, new DocumentBuilder()
@@ -24,9 +24,9 @@ async function bootstrap() {
     SwaggerModule.setup('docs', app, document);
 
   }
-  
+
   // Auto-validation - use for auto transform body to DTO
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   await app.listen(PORT, () => console.log(`api listening on port ${PORT}`));
 }
