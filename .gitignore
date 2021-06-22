@@ -33,11 +33,5 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# bash script
-scripts
-
 #
 .env
-
-#
-ormconfig.json
