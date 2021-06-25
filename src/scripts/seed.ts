@@ -1,36 +1,36 @@
-import { createConnection, ConnectionOptions } from 'typeorm';
-import { configService } from '../config/config.service';
-import { ItemService } from '../item/item.service';
-import { Item } from '../entities/item.entity';
-import { ItemDTO } from '../item/item.dto';
+// import { createConnection, ConnectionOptions } from 'typeorm';
+// import { configService } from '../config/config.service';
+// import { ItemService } from '../item/item.service';
+// import { Item } from '../entities/item.entity';
+// import { ItemDTO } from '../item/item.dto';
 
-async function run() {
+// async function run() {
 
-  const seedId = Date.now()
-    .toString()
-    .split('')
-    .reverse()
-    .reduce((s, it, x) => (x > 3 ? s : (s += it)), '');
+//   const seedId = Date.now()
+//     .toString()
+//     .split('')
+//     .reverse()
+//     .reduce((s, it, x) => (x > 3 ? s : (s += it)), '');
 
-  const opt = {
-    ...configService.getTypeOrmConfig(),
-    debug: true
-  };
+//   const opt = {
+//     ...configService.getTypeOrmConfig(),
+//     debug: true
+//   };
 
-  const connection = await createConnection(opt as ConnectionOptions);
-  const itemService = new ItemService(connection.getRepository(Item));
+//   const connection = await createConnection(opt as ConnectionOptions);
+//   const itemService = new ItemService(connection.getRepository(Item));
 
-  const work = [...Array(10).keys()]
-    .map(n => ItemDTO.from({
-      name: `seed${seedId}-${n}`,
-      description: 'created from seed'
-    }))
-    .map(dto => itemService.create(dto)
-      .then(r => (console.log('done ->', r.name), r)))
+//   const work = [...Array(10).keys()]
+//     .map(n => ItemDTO.from({
+//       name: `seed${seedId}-${n}`,
+//       description: 'created from seed'
+//     }))
+//     .map(dto => itemService.create(dto)
+//       .then(r => (console.log('done ->', r.name), r)))
 
-  return await Promise.all(work);
-}
+//   return await Promise.all(work);
+// }
 
-run()
-  .then(_ => console.log('...wait for script to exit'))
-  .catch(error => console.error('seed error', error));
+// run()
+//   .then(_ => console.log('...wait for script to exit'))
+//   .catch(error => console.error('seed error', error));

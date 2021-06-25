@@ -1,7 +1,7 @@
 import { Entity, Column, DeleteDateColumn, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { Message } from './message.entity';
-import { Participant } from './participants.entity';
+import { Participant } from './participant.entity';
 import { User } from './user.entity';
 
 @Entity({ name: 'conversation' })
