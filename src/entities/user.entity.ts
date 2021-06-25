@@ -1,5 +1,7 @@
-import { Entity, Column } from "typeorm";
-import { BaseEntity } from "./base.entity";
+import { Entity, Column, OneToMany } from 'typeorm';
+import { BaseEntity } from './base.entity';
+import { Conversation } from './conversation.entity';
+import { Message } from './message.entity';
 
 @Entity({ name: 'users' })
 export class User extends BaseEntity {
@@ -30,4 +32,9 @@ export class User extends BaseEntity {
   @Column({ type: 'text', nullable: true })
   preferences: string;
 
+  @OneToMany(() => Conversation, (conversation) => conversation.user)
+  conversations: Conversation[];
+
+  @OneToMany(() => Message, (message) => message.user)
+  messages: Message[];
 }
