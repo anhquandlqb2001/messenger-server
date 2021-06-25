@@ -8,11 +8,11 @@ import { ConversationDTO } from './conversation.dto';
 export class ConversationService {
   constructor(
     @InjectRepository(Conversation)
-    private conversationRepository: Repository<Conversation>,
+    private readonly repository: Repository<Conversation>,
   ) {}
 
   async createConversation(conversation: ConversationDTO) {
-    const result = await this.conversationRepository.save(
+    const result = await this.repository.save(
       conversation.toEntity(),
     );
     return result.id;

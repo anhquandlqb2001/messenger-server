@@ -33,7 +33,7 @@ export class UserDTO implements Readonly<UserDTO> {
       email: entity.email,
       password: entity.password,
       firstName: entity.firstName,
-      lastName: entity.lastName
+      lastName: entity.lastName,
     });
   }
 

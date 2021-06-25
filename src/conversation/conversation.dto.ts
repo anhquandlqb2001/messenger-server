@@ -1,6 +1,6 @@
 import { IsObject, IsString } from 'class-validator';
+import { PublicUserDTO } from '../user/public-user.dto';
 import { Conversation } from '../entities/conversation.entity';
-import { UserDTO } from '../user/user.dto';
 
 export class ConversationDTO implements Readonly<ConversationDTO> {
   @IsString()
@@ -10,7 +10,7 @@ export class ConversationDTO implements Readonly<ConversationDTO> {
   title: string;
 
   @IsObject()
-  user: UserDTO
+  user: PublicUserDTO
 
   public static create(dto: Partial<ConversationDTO>) {
     const it = new ConversationDTO();

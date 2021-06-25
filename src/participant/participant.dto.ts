@@ -1,7 +1,7 @@
 import { IsObject, IsString } from 'class-validator';
+import { PublicUserDTO } from '../user/public-user.dto';
 import { ConversationDTO } from '../conversation/conversation.dto';
 import { Participant, ParticipantType } from '../entities/participant.entity';
-import { UserDTO } from '../user/user.dto';
 
 export class ParticipantDTO implements Readonly<ParticipantDTO> {
   @IsString()
@@ -11,7 +11,7 @@ export class ParticipantDTO implements Readonly<ParticipantDTO> {
   type: ParticipantType;
 
   @IsObject()
-  user: UserDTO;
+  user: PublicUserDTO;
 
   @IsObject()
   conversation: ConversationDTO;

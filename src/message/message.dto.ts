@@ -1,7 +1,7 @@
 import { IsDate, IsObject, IsString } from 'class-validator';
+import { PublicUserDTO } from '../user/public-user.dto';
 import { ConversationDTO } from '../conversation/conversation.dto';
 import { Message, MessageType } from '../entities/message.entity';
-import { UserDTO } from '../user/user.dto';
 
 export class MessageDTO implements Readonly<MessageDTO> {
   @IsString()
@@ -14,7 +14,7 @@ export class MessageDTO implements Readonly<MessageDTO> {
   messageType: MessageType;
 
   @IsObject()
-  user: UserDTO;
+  user: PublicUserDTO;
 
   @IsObject()
   conversation: ConversationDTO;

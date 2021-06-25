@@ -37,6 +37,7 @@ export class PublicUserDTO implements Readonly<PublicUserDTO> {
 
   public toEntity() {
     const it = new User();
+    it.id = this.id
     it.email = this.email;
     it.firstName = this.firstName;
     it.lastName = this.lastName;
