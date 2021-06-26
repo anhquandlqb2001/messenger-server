@@ -10,12 +10,14 @@
   ],
   "migrationsTableName": "migration",
   "migrations": [
-    "src/migrations/*.ts"
+    "./src/migrations/*.ts"
   ],
   "cli": {
-    "migrationsDir": "src/migrations"
+    "entitiesDir": "src/entities",
+    "migrationsDir": "./src/migrations"
   },
-  "synchronize": true,
   "schema": "public",
+  "synchronize": false,
+  "logging": true,
   "ssl": false
 }

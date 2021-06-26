@@ -13,7 +13,6 @@ export class ParticipantService {
 
   async createParticipant(participant: Participant): Promise<string> {
     const result = await this.repository.save(participant);
-    console.log(result.id);
     return result.id;
   }
 
