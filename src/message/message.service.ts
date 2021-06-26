@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Message } from '../entities/message.entity';
 import { Repository } from 'typeorm';
-import { MessageDTO } from './message.dto';
 
 @Injectable()
 export class MessageService {
@@ -11,8 +10,8 @@ export class MessageService {
     private readonly repository: Repository<Message>,
   ) {}
 
-  async createMessage(message: MessageDTO) {
-    const result = await this.repository.save(message.toEntity())
-    return result.id
+  async createMessage(message: Message) {
+    const result = await this.repository.save(message);
+    return result.id;
   }
 }
