@@ -24,7 +24,8 @@
     "pretypeorm": "(rm ormconfig.json || :) && ts-node -r tsconfig-paths/register src/scripts/generate-typeorm-config.ts",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "typeorm:migration:generate": "yarn run typeorm migration:generate -n",
-    "typeorm:migration:run": "yarn run typeorm migration:run"
+    "typeorm:migration:run": "yarn run typeorm migration:run",
+    "typeorm:migration:create": "typeorm migration:create -n"
   },
   "dependencies": {
     "@nestjs/common": "^7.6.15",

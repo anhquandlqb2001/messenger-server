@@ -1,11 +1,15 @@
-import { IsString } from 'class-validator';
-import { Conversation } from '../entities/conversation.entity';
+import { IsArray, IsString } from 'class-validator';
+import { Conversation } from '../../entities/conversation.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateConversationDTO implements Readonly<CreateConversationDTO> {
   @ApiProperty({ required: true })
   @IsString()
   title: string;
+
+  @ApiProperty({ required: true })
+  @IsArray()
+  participantIds: string[];
 
   public static create(dto: Partial<CreateConversationDTO>) {
     const it = new CreateConversationDTO();

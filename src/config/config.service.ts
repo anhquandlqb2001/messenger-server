@@ -49,6 +49,10 @@ class ConfigService {
         migrationsDir: 'src/migrations',
       },
 
+      synchronize: true,
+
+      schema: 'public',
+
       ssl: this.isProduction(),
     };
   }

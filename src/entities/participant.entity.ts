@@ -1,22 +1,22 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { Conversation } from './conversation.entity';
 import { User } from './user.entity';
 
 export enum ParticipantType {
-  SINGLE, GROUP
+  SINGLE,
+  GROUP,
 }
 
 @Entity({ name: 'participants' })
 export class Participant extends BaseEntity {
+  @Column({ type: 'int' })
+  type: ParticipantType;
 
-  @Column({type: 'int'})
-  type: ParticipantType
-
-  @OneToOne(() => User)
+  @ManyToOne(() => User, (user) => user.participants)
   @JoinColumn()
   user: User;
 
   @ManyToOne(() => Conversation, (conversation) => conversation.user)
-  conversation: Conversation;
+  conversation!: Conversation;
 }

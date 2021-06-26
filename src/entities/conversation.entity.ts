@@ -4,7 +4,7 @@ import { Message } from './message.entity';
 import { Participant } from './participant.entity';
 import { User } from './user.entity';
 
-@Entity({ name: 'conversation' })
+@Entity({ name: 'conversations' })
 export class Conversation extends BaseEntity {
   @Column({ type: 'varchar', length: 40 })
   title: string;

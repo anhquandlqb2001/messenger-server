@@ -15,5 +15,7 @@
   "cli": {
     "migrationsDir": "src/migrations"
   },
+  "synchronize": true,
+  "schema": "public",
   "ssl": false
 }

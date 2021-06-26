@@ -6,6 +6,6 @@ import { ParticipantService } from './participant.service';
 @Module({
   imports: [TypeOrmModule.forFeature([Participant])],
   providers: [ParticipantService],
-  exports: [ParticipantService]
+  exports: [TypeOrmModule, ParticipantService]
 })
 export class ParticipantModule {}
