@@ -18,7 +18,7 @@ export class AuthService {
 
   public async validateUser(userInput: UserLoginInput) {
     const user = await this.userService.findUser(userInput.email);
-
+    
     // check if user not existed
     if (!user) return null
 

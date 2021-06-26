@@ -7,7 +7,7 @@ import {
   UseInterceptors,
   ClassSerializerInterceptor,
 } from '@nestjs/common';
-import { UserDTO } from '../user/create-user.dto';
+import { CreateUserDTO } from '../user/create-user.dto';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './local-auth.guard';
 
@@ -17,7 +17,7 @@ export class AuthController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('register')
-  public async register(@Body() user: UserDTO) {
+  public async register(@Body() user: CreateUserDTO) {
     const result = await this.authService.registerUser(user.toEntity());
     return result;
   }
