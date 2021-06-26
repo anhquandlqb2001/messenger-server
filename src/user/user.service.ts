@@ -4,7 +4,6 @@ import { User } from '../entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { SALT_ROUND } from '../constants';
-import { PublicUserDTO } from './public-user.dto';
 
 @Injectable()
 export class UserService {
@@ -25,17 +24,14 @@ export class UserService {
     }
   }
 
-  // need password
-  public async findUser(email: string): Promise<User | undefined> {
-    return this.userRepository.findOne({ where: { email } });
+  public async findUser(
+    email?: string,
+    userId?: string,
+  ): Promise<User | undefined> {
+    return this.userRepository.findOne({ where: [{ email }, { id: userId }] });
   }
 
-  public async findPublicUser(userId: string): Promise<PublicUserDTO> {
-    const user = await this.userRepository.findOne({ id: userId });
-    return PublicUserDTO.createFromEntity(user);
-  }
-
-  public async findOtherPeople(searchTerm: string) {
+  public async findOtherPeoples(searchTerm: string) {
     const users = await this.userRepository
       .createQueryBuilder('users')
       .select()
@@ -47,7 +43,6 @@ export class UserService {
       })
       .getMany();
 
-    const result = users.map((user) => PublicUserDTO.createFromEntity(user));
-    return result;
+    return users;
   }
 }

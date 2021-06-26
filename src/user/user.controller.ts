@@ -20,7 +20,7 @@ export class UserController {
   // @UseGuards(JwtAuthGuard)
   @Get('search')
   async findPeople(@Request() req) {
-    const users = await this.userService.findOtherPeople(req.body.searchTerm);
+    const users = await this.userService.findOtherPeoples(req.body.searchTerm);
     return {
       users: users,
       success: true,
