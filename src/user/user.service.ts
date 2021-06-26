@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
 import { Repository } from 'typeorm';
-import { UserDTO } from './user.dto';
 import * as bcrypt from 'bcrypt';
 import { SALT_ROUND } from '../constants';
 import { PublicUserDTO } from './public-user.dto';
@@ -14,14 +13,12 @@ export class UserService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  public async createUser(userDto: UserDTO) {
+  public async createUser(user: User) {
     try {
       // hash password
-      userDto.password = await bcrypt.hash(userDto.password, SALT_ROUND);
+      user.password = await bcrypt.hash(user.password, SALT_ROUND);
 
-      const user = await this.userRepository.save(userDto.toEntity());
-
-      return PublicUserDTO.createFromEntity(user);
+      return await this.userRepository.save(user);
     } catch (error) {
       console.log(error);
       return { error };

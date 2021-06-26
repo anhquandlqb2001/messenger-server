@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { Conversation } from './conversation.entity';
@@ -11,6 +12,7 @@ export class User extends BaseEntity {
   @Column({ type: 'varchar', length: 255, unique: true })
   email: string;
 
+  @Exclude()
   @Column({ type: 'varchar', length: 300 })
   password: string;
 
@@ -37,4 +39,5 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Message, (message) => message.user)
   messages: Message[];
+
 }
