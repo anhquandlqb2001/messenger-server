@@ -3,8 +3,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 require('dotenv').config();
 
 class ConfigService {
-
-  constructor(private env: { [k: string]: string | undefined }) { }
+  constructor(private env: { [k: string]: string | undefined }) {}
 
   getValue(key: string, throwOnMissing = true): string {
     const value = this.env[key];
@@ -16,7 +15,7 @@ class ConfigService {
   }
 
   public ensureValues(keys: string[]) {
-    keys.forEach(k => this.getValue(k, true));
+    keys.forEach((k) => this.getValue(k, true));
     return this;
   }
 
@@ -43,29 +42,27 @@ class ConfigService {
 
       migrationsTableName: 'migration',
 
-      migrations: ['src/migrations/*.ts'],
+      migrations: ['./src/migrations/*.ts'],
 
       cli: {
-        migrationsDir: 'src/migrations',
+        entitiesDir: 'src/entities',
+        migrationsDir: './src/migrations',
       },
 
-      synchronize: true,
-
       schema: 'public',
-
+      synchronize: false,
+      logging: true,
       ssl: this.isProduction(),
     };
   }
-
 }
 
-const configService = new ConfigService(process.env)
-  .ensureValues([
-    'POSTGRES_HOST',
-    'POSTGRES_PORT',
-    'POSTGRES_USER',
-    'POSTGRES_PASSWORD',
-    'POSTGRES_DATABASE'
-  ]);
+const configService = new ConfigService(process.env).ensureValues([
+  'POSTGRES_HOST',
+  'POSTGRES_PORT',
+  'POSTGRES_USER',
+  'POSTGRES_PASSWORD',
+  'POSTGRES_DATABASE',
+]);
 
 export { configService };
