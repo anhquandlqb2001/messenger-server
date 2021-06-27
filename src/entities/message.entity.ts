@@ -38,6 +38,6 @@ export class Message {
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @DeleteDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+  @DeleteDateColumn({ type: 'timestamptz', nullable: true, default: null })
   deletedAt: Date;
 }

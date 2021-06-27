@@ -17,8 +17,8 @@ export class Participant extends BaseEntity {
   @JoinColumn()
   user: User;
 
-  @ManyToOne(() => Conversation, (conversation) => conversation.user, {
+  @ManyToOne(() => Conversation, (conversation) => conversation.participants, {
     nullable: false,
   })
-  conversation!: Conversation;
+  conversation: Conversation;
 }

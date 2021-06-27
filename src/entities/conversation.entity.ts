@@ -15,7 +15,11 @@ export class Conversation extends BaseEntity {
   @Column({ type: 'varchar', length: 40 })
   title: string;
 
-  @DeleteDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+  @DeleteDateColumn({
+    type: 'timestamptz',
+    nullable: true,
+    default: null,
+  })
   deletedAt: Date;
 
   @ManyToOne(() => User, (user) => user.conversations, { nullable: false })
