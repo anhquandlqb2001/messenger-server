@@ -1,12 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Conversation } from '../entities/conversation.entity';
 import { Repository } from 'typeorm';
 import { UserService } from '../user/user.service';
-import { NotFoundException } from '@nestjs/common';
 import {
   CreateConversationType,
-  GetConversationType,
+  FindConversationType,
 } from './conversation.interface';
 import { Participant, ParticipantType } from '../entities/participant.entity';
 import { ParticipantService } from '../participant/participant.service';
@@ -20,17 +19,25 @@ export class ConversationService {
     private readonly userService: UserService,
   ) {}
 
-  async getConversation({ creatorId, participantId }: GetConversationType) {
+  async getConversation({ creatorId, participantIds }: FindConversationType) {
     const user = await this.userService.findUser(null, creatorId);
 
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new UnauthorizedException();
     }
 
-    // const result = await this.participantRepository
-    //   .createQueryBuilder('participants')
-    //   .select()
-    //   .where()
+    const participantType =
+      participantIds.length === 1
+        ? ParticipantType.SINGLE
+        : ParticipantType.GROUP;
+
+    const result = await this.participantService.findConversation({
+      creatorId,
+      participantIds,
+      participantType,
+    });
+
+    return result;
   }
 
   async createConversation({
@@ -41,7 +48,7 @@ export class ConversationService {
     const user = await this.userService.findUser(null, creatorId);
 
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new UnauthorizedException();
     }
 
     const conversation = new Conversation();
@@ -54,11 +61,11 @@ export class ConversationService {
         ? ParticipantType.SINGLE
         : ParticipantType.GROUP;
 
-    [...participantIds, result.user.id].map(async (participantId) => {
+    [...participantIds, creatorId].map(async (participantId) => {
       const participant = new Participant();
       participant.type = participantType;
       participant.user = await this.userService.findUser(null, participantId);
-      participant.conversation = conversation;
+      participant.conversation = result;
       try {
         await this.participantService.createParticipant(participant);
       } catch (error) {

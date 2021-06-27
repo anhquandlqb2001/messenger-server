@@ -24,14 +24,14 @@ export class ConversationController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  async getSingleConversation(@Body() body: GetConversationDTO, @Req() req) {
-    const { participantId } = body;
+  async getConversation(@Body() body: GetConversationDTO, @Req() req) {
+    const { participantIds } = body;
 
-    const id = await this.conversationService.getConversation({
+    const conversation = await this.conversationService.getConversation({
       creatorId: req.user.userId,
-      participantId,
+      participantIds,
     });
 
-    return { conversationId: id, success: true };
+    return { conversation, success: true };
   }
 }
