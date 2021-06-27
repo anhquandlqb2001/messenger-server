@@ -13,10 +13,12 @@ export class Participant extends BaseEntity {
   @Column({ type: 'int' })
   type: ParticipantType;
 
-  @ManyToOne(() => User, (user) => user.participants)
+  @ManyToOne(() => User, (user) => user.participants, { nullable: false })
   @JoinColumn()
   user: User;
 
-  @ManyToOne(() => Conversation, (conversation) => conversation.user)
+  @ManyToOne(() => Conversation, (conversation) => conversation.user, {
+    nullable: false,
+  })
   conversation!: Conversation;
 }

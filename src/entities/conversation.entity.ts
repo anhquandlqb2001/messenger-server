@@ -1,4 +1,10 @@
-import { Entity, Column, DeleteDateColumn, ManyToOne, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  DeleteDateColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { Message } from './message.entity';
 import { Participant } from './participant.entity';
@@ -12,12 +18,12 @@ export class Conversation extends BaseEntity {
   @DeleteDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   deletedAt: Date;
 
-  @ManyToOne(() => User, user => user.conversations)
+  @ManyToOne(() => User, (user) => user.conversations, { nullable: false })
   user: User;
 
-  @OneToMany(() => Message, message => message.conversation)
+  @OneToMany(() => Message, (message) => message.conversation)
   messages: Message[];
 
-  @OneToMany(() => Participant, participant => participant.conversation)
+  @OneToMany(() => Participant, (participant) => participant.conversation)
   participants: Participant[];
 }
