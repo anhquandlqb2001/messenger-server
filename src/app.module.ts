@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { MessageModule } from './message/message.module';
 import { ConversationModule } from './conversation/conversation.module';
 import { ParticipantModule } from './participant/participant.module';
+import { FriendModule } from './friend/friend.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { ParticipantModule } from './participant/participant.module';
     ConversationModule,
     ParticipantModule,
     MessageModule,
+    FriendModule,
   ],
   providers: [AppService],
   controllers: [AppController],

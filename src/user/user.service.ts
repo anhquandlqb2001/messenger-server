@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { SALT_ROUND } from '../constants';
 
@@ -29,6 +29,10 @@ export class UserService {
     userId?: string,
   ): Promise<User | undefined> {
     return this.userRepository.findOne({ where: [{ email }, { id: userId }] });
+  }
+
+  public async users(meId: string): Promise<User[] | undefined> {
+    return this.userRepository.find({ where: { id: Not(meId) } });
   }
 
   public async findOtherPeoples(searchTerm: string) {
