@@ -40,6 +40,10 @@ export class ConversationService {
     return result;
   }
 
+  async findConversation(id: string) {
+    return await this.conversationRepository.findOne(id);
+  }
+
   async createConversation({
     title,
     creatorId,

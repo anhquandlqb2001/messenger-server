@@ -7,9 +7,13 @@ import { UserModule } from '../user/user.module';
 import { ParticipantModule } from '../participant/participant.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Conversation]), UserModule, ParticipantModule],
+  imports: [
+    TypeOrmModule.forFeature([Conversation]),
+    UserModule,
+    ParticipantModule,
+  ],
   providers: [ConversationService],
   exports: [ConversationService],
-  controllers: [ConversationController]
+  controllers: [ConversationController],
 })
 export class ConversationModule {}

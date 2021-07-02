@@ -1,39 +1,41 @@
-import { Logger } from '@nestjs/common';
 import {
   MessageBody,
+  OnGatewayConnection,
+  OnGatewayDisconnect,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-  OnGatewayInit,
-  OnGatewayConnection,
-  OnGatewayDisconnect,
 } from '@nestjs/websockets';
 import { Server } from 'socket.io';
+import { CreateMessageDTO } from './dtos/create-message.dto';
+import { MessageService } from './message.service';
 
 @WebSocketGateway()
 export class MessageGateway
-  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
+  implements OnGatewayConnection, OnGatewayDisconnect
 {
-  private logger: Logger = new Logger('MessageGateway');
+  constructor(private readonly messageService: MessageService) {}
 
   @WebSocketServer()
   server: Server;
 
-  handleConnection(client: any, ...args: any[]) {
+  handleConnection(_: any, ...__: any[]) {
     console.log('client connected');
   }
 
-  handleDisconnect(client: any) {
+  handleDisconnect(_: any) {
     console.log('client disconnected');
   }
 
-  @SubscribeMessage('events')
-  handleEvent(@MessageBody() data: string): string {
-    console.log(data);
-    return data;
-  }
+  @SubscribeMessage('message')
+  async handleMessage(@MessageBody() data: CreateMessageDTO): Promise<string> {
+    const fakeUserId = '0c63e882-ac7a-4b35-b60f-91da1254ffb0'; //a
 
-  afterInit(server: any) {
-    this.logger.log('init');
+    const messageId = await this.messageService.createMessage({
+      messageDto: data,
+      userId: fakeUserId,
+    });
+
+    return messageId;
   }
 }
