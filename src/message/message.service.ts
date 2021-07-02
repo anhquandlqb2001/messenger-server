@@ -36,6 +36,6 @@ export class MessageService {
     
     const result = await this.repository.save(message);
 
-    return result.id;
+    return result;
   }
 }

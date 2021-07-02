@@ -8,6 +8,7 @@ import {
 } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 import { CreateMessageDTO } from './dtos/create-message.dto';
+import { ReceiveMessageDTO } from './dtos/receive-message.dto';
 import { MessageService } from './message.service';
 
 @WebSocketGateway()
@@ -27,15 +28,18 @@ export class MessageGateway
     console.log('client disconnected');
   }
 
-  @SubscribeMessage('message')
-  async handleMessage(@MessageBody() data: CreateMessageDTO): Promise<string> {
+  @SubscribeMessage('send-message')
+  async handleMessage(@MessageBody() data: CreateMessageDTO) {
     const fakeUserId = '0c63e882-ac7a-4b35-b60f-91da1254ffb0'; //a
 
-    const messageId = await this.messageService.createMessage({
+    const message = await this.messageService.createMessage({
       messageDto: data,
       userId: fakeUserId,
     });
 
-    return messageId;
+    this.server.emit(
+      'receive-message',
+      ReceiveMessageDTO.createFromEntity(message),
+    );
   }
 }
