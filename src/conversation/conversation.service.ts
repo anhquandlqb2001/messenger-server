@@ -44,6 +44,14 @@ export class ConversationService {
     return await this.conversationRepository.findOne(id);
   }
 
+  async getConversations(creatorId: string) {
+    return await this.conversationRepository.find({
+      where: { user: { id: creatorId } },
+      order: { updatedAt: 'DESC' },
+      take: 10,
+    });
+  }
+
   async createConversation({
     title,
     creatorId,
