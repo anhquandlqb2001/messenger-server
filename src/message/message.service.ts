@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Message, MessageType } from '../entities/message.entity';
 import { Repository } from 'typeorm';
@@ -33,9 +37,21 @@ export class MessageService {
     if (!user) throw new NotFoundException('User not found');
 
     message.user = user;
-    
+
     const result = await this.repository.save(message);
 
     return result;
+  }
+
+  async messages(conversationId: string) {
+    try {
+      const messages = await this.repository.find({
+        where: { conversation: { id: conversationId } }, loadRelationIds: true
+      });
+
+      return messages;
+    } catch (error) {
+      throw new BadRequestException();
+    }
   }
 }
