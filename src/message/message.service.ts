@@ -46,7 +46,9 @@ export class MessageService {
   async messages(conversationId: string) {
     try {
       const messages = await this.repository.find({
-        where: { conversation: { id: conversationId } }, loadRelationIds: true
+        where: { conversation: { id: conversationId } },
+        loadRelationIds: true,
+        order: { createdAt: 'ASC' },
       });
 
       return messages;
